@@ -11,7 +11,7 @@ if __name__ == "__main__":
     create_dirs(config.model_save_path, config.results_save_path)
     
     # 获取数据
-    train_files = get_files("C:/Users/Le'novo/Desktop/毕设/DroneMA/data/positive")
+    train_files = get_files("../")
     test_files = get_files("C:/Users/Le'novo/Desktop/毕设/DroneMA/data/negtive")
     print(f"找到的训练文件数量: {len(train_files)}")
     print(f"找到的测试文件数量: {len(test_files)}")

@@ -3,7 +3,7 @@ import torch
 class Config:
     seed = 42
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-    num_epochs = 10
+    num_epochs = 100
     train_window = 70
     # model_type = 'gru'
     model_type = 'informer'  # 修改模型类型
