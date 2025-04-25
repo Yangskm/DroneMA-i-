@@ -3,11 +3,12 @@ import random
 import os
 import pandas as pd
 import torch
-from informer import SimplifiedInformer
+from informer import EnhancedInformer
+# from transformer import TransformerModel
 # --- Configuration and Custom Modules ---
 from config import config
 from data_processing import create_train_dataloader, create_eval_dataloader
-from model import R2DGRU
+from model import R2DTransformer
 # Import test_model AND the new evaluate function from test.py
 from test import test_model, evaluate # <<< MODIFIED IMPORT
 from train import train_model
@@ -51,19 +52,26 @@ if __name__ == "__main__":
     # --- 4. Initialize and Train Model ---
     if config.model_type == 'informer':
         
-     model = SimplifiedInformer(
+     model = EnhancedInformer(
         input_size=1, 
-        hidden_size=64,  # 增大隐藏层维度
-        output_size=1,
-        n_heads=8,       # 增加注意力头数
-        e_layers=3,      # 加深编码器
-        d_layers=2,      # 加深解码器
-        d_ff=256,        # 增大FFN维度
-        dropout=0.1,     # 保持dropout
-        use_relative_pos=True  # 启用相对位置编码
+        hidden_size=64, 
+        output_size=1, 
+        n_heads=8, 
+        e_layers=4, 
+        d_layers=3, 
+        d_ff=512, 
+        dropout=0.1,
+        use_relative_pos=True
     ).to(device)
-    else:
-        model = R2DGRU(input_size=1, hidden_size=32, output_size=1, model_type=config.model_type).to(device)
+    elif config.model_type == 'transformer':
+        model = R2DTransformer(
+            input_size=1,
+            hidden_size=64,
+            output_size=1,
+            model_type='transformer'
+        ).to(device)
+    # else:
+    #     model = R2DGRU(input_size=1, hidden_size=32, output_size=1, model_type=config.model_type).to(device)
     loss_function = torch.nn.MSELoss()
     print("\nStarting model training...")
     trained_model = train_model(model, train_loader, val_loader, config)

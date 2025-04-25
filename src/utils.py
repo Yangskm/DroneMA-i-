@@ -68,14 +68,12 @@ def compute_iqr_threshold(data):
     Q1 = pearson_data.quantile(0.25)
     Q3 = pearson_data.quantile(0.75)
     IQR = Q3 - Q1
-    threshold_raw = Q1 - 1.5 * IQR  # 未截断的原始阈值
+    threshold_raw = Q1 -1.5 * IQR  # 未截断的原始阈值
     threshold = max(threshold_raw, 0)
     
     print(f"Q1={Q1:.3f}, Q3={Q3:.3f}, IQR={IQR:.3f}")
     print(f"Raw threshold (Q1-1.5*IQR) = {threshold_raw:.3f}")
     print(f"Final threshold = {threshold:.3f}")
-    
-    threshold = Q1 - 1.5 * IQR
     threshold = max(threshold, 0) # Cap threshold at 0
     return threshold
 

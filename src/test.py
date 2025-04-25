@@ -25,11 +25,13 @@ def test_model(model, loader, device, loss_function, save_path='results.csv', ew
         for batch_idx, (inputs, targets) in enumerate(loader):
             inputs, targets = inputs.to(device), targets.to(device)
             batch_size = inputs.size(0)
+            # print(f"Batch {batch_idx}: inputs.shape = {inputs.shape}, targets.shape = {targets.shape}")
             try:
                 inputs_normalized = normalize(inputs)
                 targets_normalized = normalize(targets)
             except Exception as e: print(f"Error during normalization in batch {batch_idx}: {e}"); continue
             outputs = model(inputs_normalized)
+            # print(f"Batch {batch_idx}: outputs.shape = {outputs.shape}")
             try:
                 last_output = outputs[:, -1, :]
                 last_target_norm = targets_normalized[:, -1, :]
