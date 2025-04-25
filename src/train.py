@@ -24,8 +24,7 @@ def train_model(model, train_loader, test_loader, config):
             
             optimizer.zero_grad()
             outputs = model(inputs_normalized)
-            # loss = criterion(outputs[:, -1, :], targets_normalized[:, -1, :])
-            loss = criterion(outputs.squeeze(), targets_normalized[:, -1, :].squeeze())
+            loss = criterion(outputs[:, -1, :], targets_normalized[:, -1, :])
             loss.backward()
             optimizer.step()
             
